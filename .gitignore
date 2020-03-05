@@ -1,0 +1,6 @@
+# Default ignored files
+.idea/workspace.xml
+.DS_Store
+._*
+out
+.idea/$CACHE_FILE$
