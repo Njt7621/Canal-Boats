@@ -1,5 +1,6 @@
 package canalBoats;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import canalBoats.util.CanalSim;
@@ -14,9 +15,12 @@ public class Pilot implements Runnable {
 
     private static int counter = 0;
     private final int id = counter++;
+    private List< Segment > route;
+    private Boat boat;
 
     @Override
     public String toString() {
+
         return this.getClass().getSimpleName() + this.id;
     }
 
@@ -32,7 +36,8 @@ public class Pilot implements Runnable {
      * @param boat this Pilot's Boat
      */
     public Pilot( List< Segment > route, Boat boat ) {
-        // TODO
+      this.route = route;
+      this.boat = boat;
         CanalSim.println( "New " + this + " has " + boat );
     }
 
@@ -60,7 +65,11 @@ public class Pilot implements Runnable {
      * This method returns when the entire route has been traveled.
      */
     public void run() {
-        // TODO
+        for (Segment s: route){
+            if (s.arrive(boat)){
+
+            }
+        }
         /*
           Here are some print statements you should use within your code.
 

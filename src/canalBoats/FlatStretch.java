@@ -5,6 +5,7 @@ package canalBoats;
  */
 public class FlatStretch implements Segment {
 
+    private int length;
     private static int counter = 0;
     private final int id = counter++;
 
@@ -23,7 +24,7 @@ public class FlatStretch implements Segment {
      * @param length the distance between the stretch's endpoints
      */
     public FlatStretch( int length ) {
-        // TODO constructor code goes here
+       this.length = length;
     }
 
     /**
@@ -32,7 +33,7 @@ public class FlatStretch implements Segment {
      */
     @Override
     public int getLength() {
-        return 99999; // TODO
+        return this.length;
     }
 
     /**

@@ -13,8 +13,8 @@ package canalBoats;
  * the lock.
  */
 public class Boat {
-
-    // TODO private data here
+    private int length;
+    private String name;
 
     /**
      * Initialize the boat with its name and dimensions.
@@ -23,11 +23,12 @@ public class Boat {
      * @param length Boat's length for timing calculations
      */
     public Boat( String name, int length ) {
-        // TODO constructor code
+        this.name = name;
+        this.length = length;
     }
 
     public int getLength() {
-        return 99999; // TODO
+        return this.length;
     }
 
     /**
