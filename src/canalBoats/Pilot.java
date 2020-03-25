@@ -73,8 +73,7 @@ public class Pilot implements Runnable {
                 CanalSim.sleep((s.getLength() - boat.getLength())/  CanalSim.BOAT_SPEED);
                 //When the pilot finishes traveling through a flat stretch:
                 CanalSim.println(this + ": " + this.boat + " is through the stretch.");
-            }
-            else{
+            } else{
                 //When the pilot's boat first gets to a lock or flat stretch:
                 CanalSim.println(this + " is arriving at Lock" + s);
                 Lock l = (Lock) s;
@@ -85,21 +84,5 @@ public class Pilot implements Runnable {
                 }
             i++;
             }
-        /*
-          Here are some print statements you should use within your code.
-
-          When the pilot's boat first gets to a lock or flat stretch:
-          CanalSim.println( this + " is arriving at " + seg );
-
-          When the pilot gets their boat back after it's been through the lock:
-          CanalSim.println( this + " has " + --my boat-- + " back." );
-
-          When the pilot finishes traveling through a flat stretch:
-          CanalSim.println(
-                  this + ": " + --my-boat-- + " is through the stretch."
-          );
-
-          (Please delete these comments when done.)
-         */
     }
 }
