@@ -66,20 +66,22 @@ public class Pilot implements Runnable {
      */
     public void run() {
         int i = 0;
-        for (Segment s: route){
-            if (s.arrive(boat)) {
-                //When the pilot's boat first gets to a lock or flat stretch:
-                CanalSim.println(this + " is arriving at " + s);
-                boat.waitUntilOut();
-                //When the pilot gets their boat back after it's been through the lock:
-                CanalSim.println( this + " has " + boat.toString() + " back." );
-            }
-            else{
+        while (i < this.route.size()){
+            Segment s = route.get(i);
+            if (!s.arrive(this.boat)) {
+                CanalSim.println(this + " is arriving at Lock" + s);
                 CanalSim.sleep((s.getLength() - boat.getLength())/  CanalSim.BOAT_SPEED);
                 //When the pilot finishes traveling through a flat stretch:
-                CanalSim.println(
-                        this + ": " + boat.toString() + " is through the stretch."
-                );
+                CanalSim.println(this + ": " + this.boat + " is through the stretch.");
+            }
+            else{
+                //When the pilot's boat first gets to a lock or flat stretch:
+                CanalSim.println(this + " is arriving at Lock" + s);
+                Lock l = (Lock) s;
+                l.arrive(boat);
+                boat.waitUntilOut();
+                //When the pilot gets their boat back after it's been through the lock:
+                CanalSim.println( this + " has " + this.boat + " back." );
                 }
             i++;
             }

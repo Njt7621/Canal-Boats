@@ -61,21 +61,23 @@ public class LockMaster implements Runnable {
      * {@link LockMaster#END_BOAT} through its Lock.
      */
     public void run() {
-        CanalSim.println( this + ": I'm on duty." );
-        Boat boat;
-        do {
-            boat = this.lock.admitNextBoat();
+        CanalSim.println(this + ": I'm on duty.");
+        while (true){
+            Boat boat = this.lock.admitNextBoat();
             //Starting a new boat:
-            CanalSim.println( this + " accepted " + boat.toString() );
-            CanalSim.println( this + " helping " + boat.toString() + " through " + lock );
-            float time = ((boat.getLength() + lock.getLength())/CanalSim.BOAT_LOCK_SPEED) + (lock.getDepth()/CanalSim.UP_DOWN_SPEED);
+            CanalSim.println(this + " accepted " + boat.toString());
+            CanalSim.println(this + " helping " + boat.toString() + " through " + lock);
+
+            float time = ((boat.getLength() + lock.getLength()) / CanalSim.BOAT_LOCK_SPEED) + (lock.getDepth() / CanalSim.UP_DOWN_SPEED);
             CanalSim.sleep(time);
             boat.release();
             //Relinquishing the current boat:
-            CanalSim.println( this + ": " + boat.toString()+ " is through the lock");
-            CanalSim.sleep(lock.getDepth()/CanalSim.UP_DOWN_SPEED);
+            CanalSim.println(this + ": " + boat.toString() + " is through the lock");
+            CanalSim.sleep(lock.getDepth() / CanalSim.UP_DOWN_SPEED);
+            if (boat == END_BOAT){
+                break;
+            }
         }
-        while(boat != END_BOAT);
-        CanalSim.println( this + ": I'm going off duty!" );
+        CanalSim.println(this + ": I'm going off duty!");
     }
 }

@@ -10,6 +10,7 @@ public class Lock implements Segment {
     private String name;
     private int depth;
     private LockMaster lockMaster;
+    private LinkedBlockingQueue <Boat> linkedBlockingQueue;
 
     /**
      * Create Lock and set parameters for identification and time calculations.
@@ -27,11 +28,12 @@ public class Lock implements Segment {
         lockMaster = new LockMaster(this);
         Thread newThread = new Thread(lockMaster);
         newThread.start();
+        linkedBlockingQueue = new LinkedBlockingQueue<Boat>();
     }
 
     @Override
     public String toString() {
-        return "this is not a lock name"; // TODO
+        return this.name;
     }
 
     /**
@@ -40,7 +42,7 @@ public class Lock implements Segment {
      */
     @Override
     public int getLength() {
-       return 99999; // TODO
+       return this.length;
     }
 
     /**
@@ -48,7 +50,7 @@ public class Lock implements Segment {
      * @return this Lock's depth
      */
     public int getDepth() {
-        return 99999; // TODO
+        return this.depth;
     }
 
     /**
@@ -63,8 +65,9 @@ public class Lock implements Segment {
      */
     @Override
     public boolean arrive( Boat boat ) {
+        boat.enteringLock();
         CanalSim.println( this + " enqueueing " + boat );
-        // TODO
+        linkedBlockingQueue.offer(boat);
         return true;
     }
 
@@ -77,8 +80,13 @@ public class Lock implements Segment {
      * @return which Boat got in (FIFO order)
      */
     public Boat admitNextBoat() {
-        // wait() so you can use in LockMaster
-        CanalSim.println( this + " dequeueing " /* + --lock's-next-boat-- */ );
-        return null; // lock's next boat
+        Boat nextBoat = null;
+        try {
+            nextBoat = this.linkedBlockingQueue.take();
+            CanalSim.println(this + " dequeueing " /* + --lock's-next-boat-- */);
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return nextBoat; // lock's next boat
     }
 }
