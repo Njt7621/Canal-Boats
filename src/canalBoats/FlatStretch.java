@@ -14,8 +14,6 @@ public class FlatStretch implements Segment {
         return this.getClass().getSimpleName() + this.id;
     }
 
-    // TODO private state goes here
-
     /**
      * Create a new FlatStretch -- the opposite of a Lock.
      * FlatStretches don't have assigned names; they are

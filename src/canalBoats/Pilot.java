@@ -65,11 +65,24 @@ public class Pilot implements Runnable {
      * This method returns when the entire route has been traveled.
      */
     public void run() {
+        int i = 0;
         for (Segment s: route){
-            if (s.arrive(boat)){
-
+            if (s.arrive(boat)) {
+                //When the pilot's boat first gets to a lock or flat stretch:
+                CanalSim.println(this + " is arriving at " + s);
+                boat.waitUntilOut();
+                //When the pilot gets their boat back after it's been through the lock:
+                CanalSim.println( this + " has " + boat.toString() + " back." );
             }
-        }
+            else{
+                CanalSim.sleep((s.getLength() - boat.getLength())/  CanalSim.BOAT_SPEED);
+                //When the pilot finishes traveling through a flat stretch:
+                CanalSim.println(
+                        this + ": " + boat.toString() + " is through the stretch."
+                );
+                }
+            i++;
+            }
         /*
           Here are some print statements you should use within your code.
 

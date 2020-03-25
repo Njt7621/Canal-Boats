@@ -15,6 +15,7 @@ package canalBoats;
 public class Boat {
     private int length;
     private String name;
+    private boolean insideLock;
 
     /**
      * Initialize the boat with its name and dimensions.
@@ -25,6 +26,7 @@ public class Boat {
     public Boat( String name, int length ) {
         this.name = name;
         this.length = length;
+        this.insideLock = false;
     }
 
     public int getLength() {
@@ -37,7 +39,7 @@ public class Boat {
      */
     @Override
     public String toString() {
-        return "this is not a boat name"; // TODO
+        return this.name;
     }
 
     /**
@@ -47,7 +49,13 @@ public class Boat {
      *          hasn't come out).
      */
     public synchronized void waitUntilOut() {
-        // TODO
+        while (insideLock) {
+            try {
+                wait();
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -57,7 +65,7 @@ public class Boat {
      * @rit.post This Boat is moving through a lock.
      */
     public synchronized void enteringLock() {
-        // TODO
+        insideLock = true;
     }
 
     /**
@@ -68,6 +76,7 @@ public class Boat {
      * @rit.post This Boat is not moving through a lock.
      */
     public synchronized void release() {
-        // TODO
+        insideLock = false;
+        notifyAll();
     }
 }
