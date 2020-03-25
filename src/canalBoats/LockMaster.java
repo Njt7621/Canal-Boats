@@ -62,19 +62,20 @@ public class LockMaster implements Runnable {
      */
     public void run() {
         CanalSim.println( this + ": I'm on duty." );
-        // TODO
-        /*
-          Here are some print statements you should use:
-
-          Starting a new boat:
-          CanalSim.println( this + " accepted " + --the-boat-- );
-          CanalSim.println( this + " helping " + --the-boat-- + " through " + lock );
-
-          Relinquishing the current boat:
-          CanalSim.println( this + ": " + --the-boat-- + " is through the lock");
-
-          (Please delete these comments when done.)
-         */
+        Boat boat;
+        do {
+            boat = this.lock.admitNextBoat();
+            //Starting a new boat:
+            CanalSim.println( this + " accepted " + boat.toString() );
+            CanalSim.println( this + " helping " + boat.toString() + " through " + lock );
+            float time = ((boat.getLength() + lock.getLength())/CanalSim.BOAT_LOCK_SPEED) + (lock.getDepth()/CanalSim.UP_DOWN_SPEED);
+            CanalSim.sleep(time);
+            boat.release();
+            //Relinquishing the current boat:
+            CanalSim.println( this + ": " + boat.toString()+ " is through the lock");
+            CanalSim.sleep(lock.getDepth()/CanalSim.UP_DOWN_SPEED);
+        }
+        while(boat != END_BOAT);
         CanalSim.println( this + ": I'm going off duty!" );
     }
 }

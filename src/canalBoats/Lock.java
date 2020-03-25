@@ -6,8 +6,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 import canalBoats.util.CanalSim;
 
 public class Lock implements Segment {
-
-   // TODO private state goes here
+    private int length;
+    private String name;
+    private int depth;
+    private LockMaster lockMaster;
 
     /**
      * Create Lock and set parameters for identification and time calculations.
@@ -19,7 +21,12 @@ public class Lock implements Segment {
      *              and drained states
      */
     public Lock( String name, int length, int depth ) {
-        // TODO
+        this.name = name;
+        this.length = length;
+        this.depth = depth;
+        lockMaster = new LockMaster(this);
+        Thread newThread = new Thread(lockMaster);
+        newThread.start();
     }
 
     @Override
@@ -70,7 +77,7 @@ public class Lock implements Segment {
      * @return which Boat got in (FIFO order)
      */
     public Boat admitNextBoat() {
-        // TODO
+        // wait() so you can use in LockMaster
         CanalSim.println( this + " dequeueing " /* + --lock's-next-boat-- */ );
         return null; // lock's next boat
     }
